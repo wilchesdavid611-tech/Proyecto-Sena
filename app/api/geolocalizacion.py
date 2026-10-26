@@ -1,12 +1,14 @@
-from fastapi import FastAPI
-from app.api import usuarios
-from app.api import geolocalizacion 
-app = FastAPI(title="viaCol")
+from fastapi import APIRouter
 
-app.include_router(usuarios.router, prefix="/api/v1/usuarios", tags=["Seguridad"])
+router = APIRouter(prefix="/geolocalizacion", tags=["Módulo de Santiago - Rastreo GPS"])
 
-app.include_router(geolocalizacion.router)
+@router.post("/actualizar")
+async def actualizar_ubicacion(datos_gps: dict): 
+    return {
+        "mensaje": "Ubicación del vehículo actualizada exitosamente",
+        "datos": datos_gps
+    }
 
-@app.get("/")
-def leer_raiz():
-    return {"message": "Welcome to viaCol!"}
+@router.get("/{id_vehiculo}")
+async def obtener_ubicacion(id_vehiculo: str):
+    return {"mensaje": f"Buscando coordenadas actuales del vehículo {id_vehiculo}"}
