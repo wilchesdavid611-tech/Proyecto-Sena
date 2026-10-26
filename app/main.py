@@ -10,3 +10,4 @@ app = FastAPI(
 @app.get("/")
 def leer_raiz():
     return {"message": "Welcome to viaCol!"}
+git checkout 
